@@ -160,6 +160,11 @@ defaults
     errorfile {{ errorfile_name }} {{ errorfile }}
   {%- endfor %}
 {% endif %}
+{%- if salt['pillar.get']('haproxy:defaults:compression:enable', 'no') == True %}
+    compression algo {{ salt['pillar.get']('haproxy:defaults:compression:algo', 'gzip') }}
+    compression type {{ salt['pillar.get']('haproxy:defaults:compression:types', [])|join(' ') }}
+{%- endif %}
+
 {%- if salt['pillar.get']('haproxy:resolvers') %}
 
 
